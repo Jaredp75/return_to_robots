@@ -46,7 +46,7 @@ app.get('/unemployed', function (req, res) {
 
 app.get('/employed', function (req, res) {
   MongoClient.connect(mongoURL, function (err, db) {
-    const robots = db.collection('robotrs');
+    const robots = db.collection('robots');
     robots.find({"job": {$nin: [null]}}).toArray(function (err, docs) {
       res.render("employed", {robots: docs})
     })
@@ -54,14 +54,14 @@ app.get('/employed', function (req, res) {
 })
 
 
-app.use('/', function (req, res) {
-  MongoClient.connect(mongoURL, function (err, db) {
-    const robots = db.collection('robots');
-    robots.find({}).toArray(function (err, docs) {
-      res.render("index", {robots: docs})
-    })
-  })
-})
+//app.use('/', function (req, res) {
+//  MongoClient.connect(mongoURL, function (err, db) {
+//    const robots = db.collection('robots');
+//    robots.find({}).toArray(function (err, docs) {
+//      res.render("index", {robots: docs})
+//    })
+//  })
+//})
 
 //app.get('/', function (req, res) {
 //  res.render('index', {robots: data.robots});
