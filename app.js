@@ -33,15 +33,25 @@ app.get('/', function (req, res) {
 //app.get('/', function(req, res){
 //  res.sendFile(path.join(__dirname + '/index.mustache'));
 
-app.get('/', function (req, res) {
+app.get('/unemployed', function (req, res) {
   MongoClient.connect(mongoURL, function (err, db) {
     const robots = db.collection('robots');
     robots.find({"job": null}).toArray(function (err, docs) {
-      res.render("", {robots: docs})
+      res.render("unemployed", {robots: docs})
     })
   })
 });
 
+
+
+app.get('/employed', function (req, res) {
+  MongoClient.connect(mongoURL, function (err, db) {
+    const robots = db.collection('robotrs');
+    robots.find({"job": {$nin: [null]}}).toArray(function (err, docs) {
+      res.render("employed", {robots: docs})
+    })
+  })
+})
 
 
 app.use('/', function (req, res) {
@@ -53,16 +63,16 @@ app.use('/', function (req, res) {
   })
 })
 
-app.get('/', function (req, res) {
-  res.render('index', {robots: data.robots});
-});
+//app.get('/', function (req, res) {
+//  res.render('index', {robots: data.robots});
+//});
 
-app.get('/:username', function (req, res) {
-  var user = data.robots.find(function(x) {
-    return x.username === req.params.username
-  });
-  res.render('robots', {user: user});
-});
+//app.get('/:username', function (req, res) {
+//  var user = data.robots.find(function(x) {
+//    return x.username === req.params.username
+//  });
+//  res.render('robots', {user: user});
+//});
 
 
 
